@@ -32,3 +32,28 @@ A value is the intersection of a row and a column that will determine what type 
 6. List three data types that can be used in a table.
 
 Strings, Floats, or Integers
+
+7. Given this payments table, provide an English description of the following queries and include their results:
+    a. I'm looking for the date and amount of the payments table.
+    b. I'm looking for the amount of the payments table whose amount is greater than 500.
+    c. I'm looking for all data of the payments table whose payee is 'Mega Foods'.
+
+8. Given this users table, write SQL queries using the following criteria and include the output:
+
+- The email and sign-up date for the user named DeAndre Data.
+
+SELECT email, signup
+FROM users
+WHERE userid = 1;
+
+- The user ID for the user with email 'aleesia.algorithm@uw.edu'.
+
+SELECT userid
+FROM users
+WHERE email = 'aleesia.algorithm.uw.edu';
+
+- All the columns for the user ID equal to 4.
+
+SELECT *
+FROM users
+WHERE userid = 4;

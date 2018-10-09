@@ -1,0 +1,96 @@
+1. Write out a generic SELECT statement.
+
+SELECT title FROM books;
+
+2. Create a fun way to remember the order of operations in a SELECT statement, such as a mnemonic.
+
+FROM - Four
+WHERE - White
+GROUP BY - Giraffes
+HAVING - Have 
+SELECT - Swam
+ORDER BY - Out by the
+LIMIT - Lake 
+
+3. Given this dogs table, write queries to select the following pieces of data:
+
+    a. Display the name, gender, and age of all dogs that are part Labrador.
+
+    SELECT name, gender, age
+    FROM dogs
+    WHERE breed LIKE labrador% NOT LIKE %labrador; 
+
+    b. Display the ids of all dogs that are under 1 year old.
+
+    SELECT id
+    FROM dogs
+    WHERE age < 1;
+
+    c. Display the name and age of all dogs that are female and over 35lbs.
+
+    SELECT name, age
+    FROM dogs
+    WHERE gender=F AND weight > 35;
+
+    d. Display all of the information about all dogs that are not Shepherd mixes.
+
+    SELECT *
+    FROM dogs
+    WHERE breed NOT LIKE '%shepherd%'
+
+    e. Display the id, age, weight, and breed of all dogs that are either over 60lbs or Great Danes.
+
+    SELECT id, age, weight, breed
+    FROM dogs
+    WHERE weight > 60 OR breed='great danes';
+
+4. Given this cats table, what records are returned from these queries?
+
+    a. SELECT name, adoption_date FROM cats;
+    The name and adoption date of all cats in the database.
+
+    b. SELECT name, age FROM cats;
+    The name and age of all cats in the database.
+
+5. From the cats table, write queries to select the following pieces of data.
+
+    a. Display all the information about all of the available cats.
+
+    SELECT *
+    FROM cats
+    WHERE adoption_date != NULL;
+
+    b. Display the name and sex of all cats who are 7 years old.
+
+    SELECT name, gender
+    FROM cats
+    WHERE age=7;
+
+    c. Find all of the names of the cats, so you don’t choose duplicate names for new cats.
+
+    SELECT name, COUNT(*)
+    FROM cats
+    GROUP BY name
+    HAVING COUNT(*) > 1;
+
+6. List each comparison operator and explain when you would use it. Include a real world example for each.
+
+ = equal: when you're trying to find an exact value in a database. Ex: Trying to find a specific timestamp in an inbox database
+ > greater than: when you're trying to find a value that is greater than a standard. Ex: Trying to find recipes that take greater than 60 minutes to complete.
+ < less than: when you're trying to find a value that is less than a standard. Ex: Trying to find workouts less than 30 minutes to complete.
+ >= greater than or equal to: when you're trying to find values that are greater than or equal to a value. Ex: When you're trying to find users who are exactly 21 or older.
+ <= less than or equal to: when you're trying to find values that are less than or equal to a value. Ex: When you're trying to find who qualifies for the kid's menu at restaurants which has a qualification of 12 or younger.
+ <> or != not equal: when you're trying to see if a value is not equal to another value. Ex: When you're trying to find movies that did star a certain actor or actress.
+ AND (similar to && in JS): when you're trying to find values that match exactly the both conditions. Ex: When you're trying to find movies that were made in 2014 and were directed by women.
+ OR (similar to || in JS): when you're trying to find values that match either condition. Ex: When you're trying to see if a student completed either the extra credit essay or the extra credit video project.
+
+7. From the cats table, what data is returned from these queries?
+
+    a. SELECT name FROM cats WHERE gender = ‘F’;
+    The name of all cats that are female.
+
+    b. SELECT name FROM cats WHERE age <> 3;
+    The name of all cats that are not 3.
+
+    c. SELECT ID FROM cats WHERE name != ‘Mushi’ AND gender = ‘M’;
+    The ID of all cats whose name is not Mushi and who are not male.

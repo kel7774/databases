@@ -1,0 +1,81 @@
+1. How do you find related data held in two separate data tables?
+
+To find related data in two separate tables, you would perform a JOIN in your database. Depending on the nature of your data and what you're querying, you would use options to combine data with different conditions using WHERE or ON statements. You can also use different types of JOINS like RIGHT OUTER JOIN or LEFT OUTER JOIN to get the specific results that you want.
+
+2. Explain, in your own words, the difference between an INNER JOIN, LEFT OUTER JOIN, and RIGHT OUTER JOIN. Give a real-world example for each.
+
+An inner join is a join when you want to make sure that each table exactly matches the data you are trying to combine. An example of this would be a grocery list table, and an invoice table. An inner join would list the exact matches between the two tables that include for example, the grocery item and the quantity needed for each item that are listed in each of those tables.
+
+A left outer join is a join when you are trying to combine data from the first table with the other table.
+
+An example of this is combining film id's from a film table with their corresponding inventory id from an inventory id. 
+
+A right outer join is a join when you are trying to combine data from the second table with the first table.
+
+An example of this would be wanting to combine data from a table of cars sold with their color listed and a table of cars sold with their color and model listed. 
+
+
+3. Define primary key and foreign key. Give a real-world example for each.
+
+A primary key is a unique identifier for each row in a database.
+A primary key would be the phone number of a friend in your phone.
+A foregin key is the primary key of one table that is included as a non-unique attribute to another table.
+A foreign key would be that friend's phone number, but the phone number is located in a list of volunteers for an event you're organizing. 
+
+4. Define aliasing.
+
+Aliasing is the technique of abbreviation with databases.
+
+5. Change this query so that you are using aliasing:
+
+SELECT p.name, c.salary, c.vacation_days
+FROM professor
+JOIN compensation ON p.id = c.professor_id;
+
+6. Why would you use a NATURAL JOIN? Give a real-world example.
+You would use a natural join for tables that have a common column between the both of them. An example would be a dog table listing the dog's name and breed, and an adoption table with the dog's breed and adoption date. Performing a natural join would only list the breed one time because the natural join is implicit since both tables share the breed column.
+
+7. Using this Employee schema and data, write queries to find the following information:
+    a. List all employees and all shifts
+
+    SELECT employees.name, scheduled_shifts.shift_id, shifts.date, shifts.start_time, shifts.end_time FROM employees INNER JOIN scheduled_shifts ON employees.id = scheduled_shifts.employee_id INNER JOIN shifts ON shifts.id = scheduled_shifts.shift_id;
+
+    Output:
+
+       name       | shift_id |    date    | start_time | end_time 
+------------------+----------+------------+------------+----------
+ Hermione Granger |        2 | 1998-03-09 | 08:00:00   | 16:00:00
+ Hermione Granger |        7 | 1998-03-10 | 08:00:00   | 16:00:00
+ Hermione Granger |       12 | 1998-03-11 | 08:00:00   | 16:00:00
+ Hermione Granger |       17 | 1998-03-12 | 08:00:00   | 16:00:00
+ Hermione Granger |       22 | 1998-03-13 | 08:00:00   | 16:00:00
+ Ronald Weasley   |        8 | 1998-03-10 | 12:00:00   | 16:00:00
+ Ronald Weasley   |       18 | 1998-03-12 | 12:00:00   | 16:00:00
+ Luna Lovegood    |        3 | 1998-03-09 | 12:00:00   | 16:00:00
+ Luna Lovegood    |       13 | 1998-03-11 | 12:00:00   | 16:00:00
+ Luna Lovegood    |       23 | 1998-03-13 | 12:00:00   | 16:00:00
+ Draco Malfoy     |       15 | 1998-03-11 | 16:00:00   | 20:00:00
+ Draco Malfoy     |       20 | 1998-03-12 | 16:00:00   | 20:00:00
+ Draco Malfoy     |       25 | 1998-03-13 | 16:00:00   | 20:00:00
+ Padma Patil      |        4 | 1998-03-09 | 12:00:00   | 20:00:00
+ Padma Patil      |        9 | 1998-03-10 | 12:00:00   | 20:00:00
+ Padma Patil      |       14 | 1998-03-11 | 12:00:00   | 20:00:00
+ Padma Patil      |        1 | 1998-03-09 | 08:00:00   | 12:00:00
+ Padma Patil      |        6 | 1998-03-10 | 08:00:00   | 12:00:00
+ Padma Patil      |       11 | 1998-03-11 | 08:00:00   | 12:00:00
+ Cho Chang        |       19 | 1998-03-12 | 12:00:00   | 20:00:00
+ Cho Chang        |       24 | 1998-03-13 | 12:00:00   | 20:00:00
+ Dean Thomas      |        5 | 1998-03-09 | 16:00:00   | 20:00:00
+ Dean Thomas      |       10 | 1998-03-10 | 16:00:00   | 20:00:00
+
+
+8. Using this Adoption schema and data, please write queries to retrieve the following information and include the results:
+    a. Create a list of all volunteers. If the volunteer is fostering a dog, include each dog as well.
+    b. The cat's name, adopter's name, and adopted date for each cat adopted within the past month to be displayed as part of the "Happy Tail" social media promotion which posts recent successful adoptions.
+    c. Create a list of adopters who have not yet chosen a dog to adopt.
+    d. Lists of all cats and all dogs who have not been adopted.
+    e. The name of the person who adopted Rosco.
+
+9. Using this Library schema and data, write queries applying the following scenarios and include the results:
+    a. To determine if the library should buy more copies of a given book, please provide the names and position, in order, of all of the patrons with a hold (request for a book with all copies checked out) on "Advanced Potion-Making".
+    b. List all of the library patrons. If they have one or more books checked out, list the books with the patrons.

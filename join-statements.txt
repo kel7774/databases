@@ -71,10 +71,25 @@ You would use a natural join for tables that have a common column between the bo
 
 8. Using this Adoption schema and data, please write queries to retrieve the following information and include the results:
     a. Create a list of all volunteers. If the volunteer is fostering a dog, include each dog as well.
+
+    SELECT * FROM volunteers LEFT OUTER JOIN dogs ON volunteers.foster_dog_id = dogs.id;
+
     b. The cat's name, adopter's name, and adopted date for each cat adopted within the past month to be displayed as part of the "Happy Tail" social media promotion which posts recent successful adoptions.
+
+    SELECT cats.name, adopters.first_name, cat_adoptions.date FROM cats INNER JOIN cat_adoptions ON cats.id = cat_adoptions.cat_id INNER JOIN adopters ON adopters.id = cat_adoptions.adopter_id WHERE cat_adoptions.date > now() - interval '1 month';
+
     c. Create a list of adopters who have not yet chosen a dog to adopt.
+
+    SELECT a.first_name, a.last_name FROM adopters AS a LEFT JOIN dog_adoptions AS da ON a.id = da.adopter_id WHERE da.adopter_id IS NULL;
+
     d. Lists of all cats and all dogs who have not been adopted.
+
+
+
+
     e. The name of the person who adopted Rosco.
+
+    SELECT adopters.first_name, adopters.last_name FROM adopters RIGHT OUTER JOIN dog_adoptions ON adopters.id = dog_adoptions.adopter_id;
 
 9. Using this Library schema and data, write queries applying the following scenarios and include the results:
     a. To determine if the library should buy more copies of a given book, please provide the names and position, in order, of all of the patrons with a hold (request for a book with all copies checked out) on "Advanced Potion-Making".

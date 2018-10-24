@@ -4,7 +4,7 @@ To find related data in two separate tables, you would perform a JOIN in your da
 
 2. Explain, in your own words, the difference between an INNER JOIN, LEFT OUTER JOIN, and RIGHT OUTER JOIN. Give a real-world example for each.
 
-An inner join is a join when you want to make sure that each table exactly matches the data you are trying to combine. An example of this would be a grocery list table, and an invoice table. An inner join would list the exact matches between the two tables that include for example, the grocery item and the quantity needed for each item that are listed in each of those tables.
+An INNER JOIN is a join when you want to make sure that each table matches exactly the data you are querying. An example of this would be querying the quantity of items a grocery list table has with a column for the grocery item, and an invoice table with a column for the same thing, the grocery item.
 
 A left outer join is a join when you are trying to combine data from the first table with the other table.
 
@@ -28,69 +28,91 @@ Aliasing is the technique of abbreviation with databases.
 
 5. Change this query so that you are using aliasing:
 
-SELECT p.name, c.salary, c.vacation_days
-FROM professor
-JOIN compensation ON p.id = c.professor_id;
+SELECT professor.name, compensation.salary, compensation.vacation_days
+FROM professor AS p
+JOIN compensation AS c
+ON p.id = c.professor_id;
 
 6. Why would you use a NATURAL JOIN? Give a real-world example.
-You would use a natural join for tables that have a common column between the both of them. An example would be a dog table listing the dog's name and breed, and an adoption table with the dog's breed and adoption date. Performing a natural join would only list the breed one time because the natural join is implicit since both tables share the breed column.
+You would use a natural join for tables that have a common column between the both of them. An example would be a restaurant menu table with columns for the item name and price and an inventory table with columns for the item name and the quantity of items. A NATURAL JOIN would be able to join the tables based off the common column of the item name.
 
 7. Using this Employee schema and data, write queries to find the following information:
     a. List all employees and all shifts
 
-    SELECT employees.name, scheduled_shifts.shift_id, shifts.date, shifts.start_time, shifts.end_time FROM employees INNER JOIN scheduled_shifts ON employees.id = scheduled_shifts.employee_id INNER JOIN shifts ON shifts.id = scheduled_shifts.shift_id;
-
-    Output:
-
-       name       | shift_id |    date    | start_time | end_time 
-------------------+----------+------------+------------+----------
- Hermione Granger |        2 | 1998-03-09 | 08:00:00   | 16:00:00
- Hermione Granger |        7 | 1998-03-10 | 08:00:00   | 16:00:00
- Hermione Granger |       12 | 1998-03-11 | 08:00:00   | 16:00:00
- Hermione Granger |       17 | 1998-03-12 | 08:00:00   | 16:00:00
- Hermione Granger |       22 | 1998-03-13 | 08:00:00   | 16:00:00
- Ronald Weasley   |        8 | 1998-03-10 | 12:00:00   | 16:00:00
- Ronald Weasley   |       18 | 1998-03-12 | 12:00:00   | 16:00:00
- Luna Lovegood    |        3 | 1998-03-09 | 12:00:00   | 16:00:00
- Luna Lovegood    |       13 | 1998-03-11 | 12:00:00   | 16:00:00
- Luna Lovegood    |       23 | 1998-03-13 | 12:00:00   | 16:00:00
- Draco Malfoy     |       15 | 1998-03-11 | 16:00:00   | 20:00:00
- Draco Malfoy     |       20 | 1998-03-12 | 16:00:00   | 20:00:00
- Draco Malfoy     |       25 | 1998-03-13 | 16:00:00   | 20:00:00
- Padma Patil      |        4 | 1998-03-09 | 12:00:00   | 20:00:00
- Padma Patil      |        9 | 1998-03-10 | 12:00:00   | 20:00:00
- Padma Patil      |       14 | 1998-03-11 | 12:00:00   | 20:00:00
- Padma Patil      |        1 | 1998-03-09 | 08:00:00   | 12:00:00
- Padma Patil      |        6 | 1998-03-10 | 08:00:00   | 12:00:00
- Padma Patil      |       11 | 1998-03-11 | 08:00:00   | 12:00:00
- Cho Chang        |       19 | 1998-03-12 | 12:00:00   | 20:00:00
- Cho Chang        |       24 | 1998-03-13 | 12:00:00   | 20:00:00
- Dean Thomas      |        5 | 1998-03-09 | 16:00:00   | 20:00:00
- Dean Thomas      |       10 | 1998-03-10 | 16:00:00   | 20:00:00
-
+    SELECT employees.name, scheduled_shifts.shift_id, shifts.date, shifts.start_time, shifts.end_time 
+    FROM employees 
+    INNER JOIN scheduled_shifts 
+    ON employees.id = scheduled_shifts.employee_id 
+    INNER JOIN shifts 
+    ON shifts.id = scheduled_shifts.shift_id;
 
 8. Using this Adoption schema and data, please write queries to retrieve the following information and include the results:
     a. Create a list of all volunteers. If the volunteer is fostering a dog, include each dog as well.
 
-    SELECT * FROM volunteers LEFT OUTER JOIN dogs ON volunteers.foster_dog_id = dogs.id;
+    SELECT * FROM volunteers 
+    LEFT OUTER JOIN dogs 
+    ON volunteers.foster_dog_id = dogs.id;
 
     b. The cat's name, adopter's name, and adopted date for each cat adopted within the past month to be displayed as part of the "Happy Tail" social media promotion which posts recent successful adoptions.
 
-    SELECT cats.name, adopters.first_name, cat_adoptions.date FROM cats INNER JOIN cat_adoptions ON cats.id = cat_adoptions.cat_id INNER JOIN adopters ON adopters.id = cat_adoptions.adopter_id WHERE cat_adoptions.date > now() - interval '1 month';
+    SELECT cats.name, adopters.first_name, cat_adoptions.date 
+    FROM cats 
+    INNER JOIN cat_adoptions 
+    ON cats.id = cat_adoptions.cat_id 
+    INNER JOIN adopters 
+    ON adopters.id = cat_adoptions.adopter_id 
+    WHERE cat_adoptions.date > now() - interval '1 month';
 
     c. Create a list of adopters who have not yet chosen a dog to adopt.
 
-    SELECT a.first_name, a.last_name FROM adopters AS a LEFT JOIN dog_adoptions AS da ON a.id = da.adopter_id WHERE da.adopter_id IS NULL;
+     SELECT adopters.first_name, adopters.last_name
+     FROM adopters 
+     LEFT JOIN dog_adoptions 
+     ON adopters.id = dog_adoptions.adopter_id 
+     WHERE dog_adoptions.adopter_id IS NULL;
 
     d. Lists of all cats and all dogs who have not been adopted.
 
-
-
+    SELECT cats.name
+    FROM cats
+    LEFT JOIN cat_adoptions
+    ON cats.id = cat_adoptions.cat_id
+    WHERE cat_adoptions.cat_id IS NULL
+    UNION
+    SELECT dogs.name
+    FROM dogs
+    LEFT JOIN dog_adoptions
+    ON dogs.id = dog_adoptions.dog_id
+    WHERE dog_adoptions.dog_id IS NULL;
 
     e. The name of the person who adopted Rosco.
 
-    SELECT adopters.first_name, adopters.last_name FROM adopters RIGHT OUTER JOIN dog_adoptions ON adopters.id = dog_adoptions.adopter_id;
+    SELECT adopters.first_name, adopters.last_name
+    FROM adopters
+    JOIN dog_adoptions
+    ON dog_adoptions.adopter_id = adopters.id
+    JOIN dogs
+    ON dogs.id = dog_adoptions.dog_id
+    WHERE dogs.name = 'Rosco';
 
 9. Using this Library schema and data, write queries applying the following scenarios and include the results:
     a. To determine if the library should buy more copies of a given book, please provide the names and position, in order, of all of the patrons with a hold (request for a book with all copies checked out) on "Advanced Potion-Making".
+
+        SELECT patrons.name, holds.rank
+        FROM patrons
+        JOIN holds
+        ON patrons.id = holds.patron_id
+        JOIN books
+        ON books.isbn = holds.isbn
+        WHERE books.isbn = '9136884926'
+        ORDER BY holds.rank;
+
     b. List all of the library patrons. If they have one or more books checked out, list the books with the patrons.
+
+        SELECT patrons.name, books.title
+        FROM transactions
+        JOIN books ON (books.isbn = transactions.isbn AND transactions.checked_out_date IS NOT NULL AND transactions.checked_in_date IS NULL)
+        RIGHT OUTER JOIN patrons
+        ON transactions.patron_id = patrons.id
+        GROUP BY patrons.name, books.title
+        ORDER BY patrons.name;

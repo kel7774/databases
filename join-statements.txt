@@ -28,7 +28,7 @@ Aliasing is the technique of abbreviation with databases.
 
 5. Change this query so that you are using aliasing:
 
-SELECT professor.name, compensation.salary, compensation.vacation_days
+SELECT p.name, c.salary, c.vacation_days
 FROM professor AS p
 JOIN compensation AS c
 ON p.id = c.professor_id;
@@ -53,15 +53,23 @@ You would use a natural join for tables that have a common column between the bo
     LEFT OUTER JOIN dogs 
     ON volunteers.foster_dog_id = dogs.id;
 
+| id  | first_name | last_name  | address                    | phone_number | available_to_foster | foster_dog_id | id    | name      | gender | age | weight | breed              | intake_date              | in_foster |
+| --- | ---------- | ---------- | -------------------------- | ------------ | ------------------- | ------------- | ----- | --------- | ------ | --- | ------ | ------------------ | ------------------------ | --------- |
+| 2   | Rubeus     | Hagrid     | 1 Edge of Forbidden Forest | 256-667-2378 | true                | 10002         | 10002 | Munchkin  | F      | 0   | 8      | dachsund chihuahua | 2017-01-13T00:00:00.000Z |           |
+| 5   | Marjorie   | Dursley    | 1990 Next Door to Fubster  | 463-528-2253 | true                | 10006         | 10006 | Marmaduke | M      | 7   | 150    | great dane         | 2016-03-22T00:00:00.000Z |           |
+| 4   | Sirius     | Black      | 12 Grimmauld Place         | 878-666-4663 | true                |               |       |           |        |     |        |                    |                          |           |
+| 3   | Remus      | Lupin      | 12 Grimmauld Place         | 627-283-3771 | true                |               |       |           |        |     |        |                    |                          |           |
+| 1   | Albus      | Dumbledore | 99 Godric's Hollow         | 843-746-3649 | false               |               |       |           |        |     |        |                    |                          |           |
+
+
     b. The cat's name, adopter's name, and adopted date for each cat adopted within the past month to be displayed as part of the "Happy Tail" social media promotion which posts recent successful adoptions.
 
-    SELECT cats.name, adopters.first_name, cat_adoptions.date 
-    FROM cats 
-    INNER JOIN cat_adoptions 
-    ON cats.id = cat_adoptions.cat_id 
-    INNER JOIN adopters 
-    ON adopters.id = cat_adoptions.adopter_id 
-    WHERE cat_adoptions.date > now() - interval '1 month';
+
+| name     | first_name | date                     |
+| -------- | ---------- | ------------------------ |
+| Mushi    | Arabella   | 2018-10-04T00:00:00.000Z |
+| Victoire | Argus      | 2018-10-09T00:00:00.000Z |
+
 
     c. Create a list of adopters who have not yet chosen a dog to adopt.
 
@@ -70,6 +78,12 @@ You would use a natural join for tables that have a common column between the bo
      LEFT JOIN dog_adoptions 
      ON adopters.id = dog_adoptions.adopter_id 
      WHERE dog_adoptions.adopter_id IS NULL;
+
+| first_name | last_name |
+| ---------- | --------- |
+| Hermione   | Granger   |
+| Arabella   | Figg      |
+
 
     d. Lists of all cats and all dogs who have not been adopted.
 
@@ -85,6 +99,17 @@ You would use a natural join for tables that have a common column between the bo
     ON dogs.id = dog_adoptions.dog_id
     WHERE dog_adoptions.dog_id IS NULL;
 
+
+| name      |
+| --------- |
+| Boujee    |
+| Lassie    |
+| Marley    |
+| Marmaduke |
+| Munchkin  |
+| Nala      |
+| Seashell  |
+
     e. The name of the person who adopted Rosco.
 
     SELECT adopters.first_name, adopters.last_name
@@ -94,6 +119,11 @@ You would use a natural join for tables that have a common column between the bo
     JOIN dogs
     ON dogs.id = dog_adoptions.dog_id
     WHERE dogs.name = 'Rosco';
+
+| first_name | last_name |
+| ---------- | --------- |
+| Argus      | Filch     |
+
 
 9. Using this Library schema and data, write queries applying the following scenarios and include the results:
     a. To determine if the library should buy more copies of a given book, please provide the names and position, in order, of all of the patrons with a hold (request for a book with all copies checked out) on "Advanced Potion-Making".
@@ -107,6 +137,12 @@ You would use a natural join for tables that have a common column between the bo
         WHERE books.isbn = '9136884926'
         ORDER BY holds.rank;
 
+| name           | rank |
+| -------------- | ---- |
+| Terry Boot     | 1    |
+| Cedric Diggory | 2    |
+
+
     b. List all of the library patrons. If they have one or more books checked out, list the books with the patrons.
 
         SELECT patrons.name, books.title
@@ -116,3 +152,12 @@ You would use a natural join for tables that have a common column between the bo
         ON transactions.patron_id = patrons.id
         GROUP BY patrons.name, books.title
         ORDER BY patrons.name;
+
+
+| name             | title                                   |
+| ---------------- | --------------------------------------- |
+| Cedric Diggory   | Fantastic Beasts and Where to Find Them |
+| Cho Chang        |                                         |
+| Hermione Granger |                                         |
+| Padma Patil      |                                         |
+| Terry Boot       | Advanced Potion-Making                  |

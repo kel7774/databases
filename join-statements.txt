@@ -63,7 +63,14 @@ You would use a natural join for tables that have a common column between the bo
 
 
     b. The cat's name, adopter's name, and adopted date for each cat adopted within the past month to be displayed as part of the "Happy Tail" social media promotion which posts recent successful adoptions.
-
+    
+SELECT cats.name, adopters.first_name, cat_adoptions.date 
+ 24 -    FROM cats 
+ 25 -    INNER JOIN cat_adoptions 
+ 26 -    ON cats.id = cat_adoptions.cat_id 
+ 27 -    INNER JOIN adopters 
+ 28 -    ON adopters.id = cat_adoptions.adopter_id 
+ 29 -    WHERE cat_adoptions.date > now() - interval '1 month';
 
 | name     | first_name | date                     |
 | -------- | ---------- | ------------------------ |
